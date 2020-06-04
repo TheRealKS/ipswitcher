@@ -12,14 +12,133 @@ namespace WindowsFormsApp1
 {
     public partial class Form1 : Form
     {
+
+        AdapterManager am;
+
         public Form1()
         {
             InitializeComponent();
         }
 
-        private void label3_Click(object sender, EventArgs e)
+        private void Form1_Load(object sender, EventArgs e)
         {
+            am = new AdapterManager(this);
 
+            IP_ONE.Text = Properties.Settings.Default.ip_one;
+            IP_TWO.Text = Properties.Settings.Default.ip_two;
+            IP_THREE.Text = Properties.Settings.Default.ip_three;
+
+            SUBNET_ONE.Text = Properties.Settings.Default.subnet_one;
+            SUBNET_TWO.Text = Properties.Settings.Default.subnet_two;
+            SUBNET_THREE.Text = Properties.Settings.Default.subnet_three;
+
+            GATEWAY_ONE.Text = Properties.Settings.Default.gateway_one;
+            GATEWAY_TWO.Text = Properties.Settings.Default.gateway_two;
+            GATEWAY_THREE.Text = Properties.Settings.Default.gateway_three;
+        }
+
+        public void addAdapter(string nm)
+        {
+            AdapterList.Items.Add(nm);
+        }
+
+        private void applyConfig(AdapterConfiguration c)
+        {
+            try
+            {
+                int i = am.updateAdapterConfiguration(c);
+                status.Text = "Applied settings : " + (c.id > 0 ? c.id.ToString() : "DHCP");
+            } catch (Exception ex)
+            {
+                //Do something with exception;
+                status.Text = "Error: " + ex.ToString();
+            }
+        }
+
+        private void AdapterList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            am.setCurrentAdapter(AdapterList.SelectedItem.ToString());
+        }
+
+        private void Applyone_Click(object sender, EventArgs e)
+        {
+            AdapterConfiguration config = new AdapterConfiguration();
+            config.ip = IP_ONE.Text;
+            config.id = 1;
+            if (!String.IsNullOrEmpty(SUBNET_ONE.Text))
+            {
+                config.subnet = SUBNET_ONE.Text;
+            }
+            if (!String.IsNullOrEmpty(GATEWAY_ONE.Text))
+            {
+                config.subnet = GATEWAY_ONE.Text;
+            }
+
+            applyConfig(config);
+        }
+
+        private void Applytwo_Click(object sender, EventArgs e)
+        {
+            AdapterConfiguration config = new AdapterConfiguration();
+            config.ip = IP_TWO.Text;
+            config.id = 2;
+            if (!String.IsNullOrEmpty(SUBNET_TWO.Text))
+            {
+                config.subnet = SUBNET_TWO.Text;
+            }
+            if (!String.IsNullOrEmpty(GATEWAY_TWO.Text))
+            {
+                config.subnet = GATEWAY_TWO.Text;
+            }
+
+            applyConfig(config);
+        }
+
+        private void Applythree_Click(object sender, EventArgs e)
+        {
+            AdapterConfiguration config = new AdapterConfiguration();
+            config.ip = IP_THREE.Text;
+            config.id = 3;
+            if (!String.IsNullOrEmpty(SUBNET_THREE.Text))
+            {
+                config.subnet = SUBNET_THREE.Text;
+            }
+            if (!String.IsNullOrEmpty(GATEWAY_THREE.Text))
+            {
+                config.subnet = GATEWAY_THREE.Text;
+            }
+
+            applyConfig(config);
+        }
+
+        private void DHCP_Click(object sender, EventArgs e)
+        {
+            AdapterConfiguration config = new AdapterConfiguration();
+            config.dir = SwitchDirection.TO_DHCP;
+
+            applyConfig(config);
+        }
+
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.ip_one = IP_ONE.Text;
+            Properties.Settings.Default.ip_two = IP_TWO.Text;
+            Properties.Settings.Default.ip_three = IP_THREE.Text;
+
+            Properties.Settings.Default.subnet_one = SUBNET_ONE.Text;
+            Properties.Settings.Default.subnet_two = SUBNET_TWO.Text;
+            Properties.Settings.Default.subnet_three = SUBNET_THREE.Text;
+
+            Properties.Settings.Default.gateway_one = GATEWAY_ONE.Text;
+            Properties.Settings.Default.gateway_two = GATEWAY_TWO.Text;
+            Properties.Settings.Default.gateway_three = GATEWAY_THREE.Text;
+
+            status.Text = "Saved!";
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Properties.Settings.Default.Save();
         }
     }
 }

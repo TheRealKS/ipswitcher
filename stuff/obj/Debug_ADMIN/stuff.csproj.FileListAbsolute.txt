@@ -1,0 +1,10 @@
+C:\Users\koens\source\repos\TheRealKS\ipswitcher\stuff\bin\Debug_ADMIN\stuff.exe.config
+C:\Users\koens\source\repos\TheRealKS\ipswitcher\stuff\bin\Debug_ADMIN\stuff.exe
+C:\Users\koens\source\repos\TheRealKS\ipswitcher\stuff\bin\Debug_ADMIN\stuff.pdb
+C:\Users\koens\source\repos\TheRealKS\ipswitcher\stuff\obj\Debug_ADMIN\stuff.csprojAssemblyReference.cache
+C:\Users\koens\source\repos\TheRealKS\ipswitcher\stuff\obj\Debug_ADMIN\WindowsFormsApp1.Form1.resources
+C:\Users\koens\source\repos\TheRealKS\ipswitcher\stuff\obj\Debug_ADMIN\WindowsFormsApp1.Properties.Resources.resources
+C:\Users\koens\source\repos\TheRealKS\ipswitcher\stuff\obj\Debug_ADMIN\stuff.csproj.GenerateResource.cache
+C:\Users\koens\source\repos\TheRealKS\ipswitcher\stuff\obj\Debug_ADMIN\stuff.csproj.CoreCompileInputs.cache
+C:\Users\koens\source\repos\TheRealKS\ipswitcher\stuff\obj\Debug_ADMIN\stuff.exe
+C:\Users\koens\source\repos\TheRealKS\ipswitcher\stuff\obj\Debug_ADMIN\stuff.pdb
