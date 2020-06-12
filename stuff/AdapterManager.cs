@@ -1,9 +1,15 @@
 ﻿using System.Net.NetworkInformation;
 using System;
 using System.Management;
+using System.Reflection;
 
 namespace WindowsFormsApp1
 {
+    struct ConfigSettingResult {
+        public int sub_ip;
+        public int gateway;
+    }
+
     class AdapterManager
     {
         NetworkInterface[] interfaces;
@@ -35,7 +41,7 @@ namespace WindowsFormsApp1
             return false;
         }
 
-        public int updateAdapterConfiguration(AdapterConfiguration config)
+        public ConfigSettingResult updateAdapterConfiguration(AdapterConfiguration config)
         {   
             if (!config.verify())
             {
@@ -54,7 +60,10 @@ namespace WindowsFormsApp1
                     if (config.dir == SwitchDirection.TO_DHCP)
                     {
                         objMO.InvokeMethod("EnableDHCP", null);
-                        return 0;
+                        ConfigSettingResult result = new ConfigSettingResult();
+                        result.sub_ip = 0;
+                        result.gateway = 0;
+                        return result;
                     } else if (config.dir == SwitchDirection.TO_STATIC)
                     {
                         ManagementBaseObject newIP = objMO.GetMethodParameters("EnableStatic");
@@ -67,16 +76,24 @@ namespace WindowsFormsApp1
                         else
                             newIP["SubnetMask"] = new string[] { "255.255.255.0" };
 
+                        PropertyDataCollection res = objMO.InvokeMethod("EnableStatic", newIP, null).Properties;
+                        UInt32 ret = (UInt32)res["ReturnValue"].Value;
+                        int ipretval = (int)ret;
+                        int gatewayretval = -1;
+
                         if (config.gateway != null)
                         {
                             ManagementBaseObject newGateway = objMO.GetMethodParameters("SetGateways");
                             newGateway["DefaultIPGateway"] = new string[] { config.gateway };
-                            objMO.InvokeMethod("SetGateways", newGateway, null);
+                            PropertyDataCollection result = objMO.InvokeMethod("SetGateways", newGateway, null).Properties;
+                            UInt32 retval = (UInt32)result["ReturnValue"].Value;
+                            gatewayretval = (int)retval;
                         }
 
-                        PropertyDataCollection res = objMO.InvokeMethod("EnableStatic", newIP, null).Properties;
-                        UInt32 ret = (UInt32)res["ReturnValue"].Value;
-                        return (int)ret;
+                        ConfigSettingResult resultstruct = new ConfigSettingResult();
+                        resultstruct.sub_ip = ipretval;
+                        resultstruct.gateway = gatewayretval;
+                        return resultstruct;
                     }
                 }
             }

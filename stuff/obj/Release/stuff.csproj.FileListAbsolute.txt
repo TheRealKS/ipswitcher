@@ -1,7 +1,6 @@
 C:\Users\koens\source\repos\TheRealKS\ipswitcher\stuff\bin\Release\ipswitcher.exe.config
 C:\Users\koens\source\repos\TheRealKS\ipswitcher\stuff\bin\Release\ipswitcher.exe
 C:\Users\koens\source\repos\TheRealKS\ipswitcher\stuff\bin\Release\ipswitcher.pdb
-C:\Users\koens\source\repos\TheRealKS\ipswitcher\stuff\obj\Release\stuff.csprojAssemblyReference.cache
 C:\Users\koens\source\repos\TheRealKS\ipswitcher\stuff\obj\Release\WindowsFormsApp1.Form1.resources
 C:\Users\koens\source\repos\TheRealKS\ipswitcher\stuff\obj\Release\WindowsFormsApp1.Properties.Resources.resources
 C:\Users\koens\source\repos\TheRealKS\ipswitcher\stuff\obj\Release\stuff.csproj.GenerateResource.cache

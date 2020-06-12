@@ -44,10 +44,46 @@ namespace WindowsFormsApp1
 
         private void applyConfig(AdapterConfiguration c)
         {
+            int index = AdapterList.SelectedIndex;
+            if (AdapterList.SelectedIndex == -1) {
+                status.Text = "You must select an adapter first!";
+                return;
+            }
+
             try
             {
-                int i = am.updateAdapterConfiguration(c);
-                status.Text = "Applied settings : " + (c.id > 0 ? c.id.ToString() : "DHCP");
+                ConfigSettingResult i = am.updateAdapterConfiguration(c);
+                string text = "";
+                if (i.sub_ip == 0 && i.gateway < 1) {
+                    text = "Applied settings : " + (c.id > 0 ? c.id.ToString() : "DHCP");
+                } else {
+                    if (i.sub_ip == 0 && i.gateway > 0) {
+                        text = "Could not set gateway. Code " + i.gateway.ToString();
+                        if (i.gateway == 68 || i.gateway == 71) {
+                            text += " (This indicates a bad input parameter!)";
+                        } else if (i.gateway == 67) {
+                            text += " (Are you administrator?)";
+                        } else if (i.gateway == 1) {
+                            text += " (You may need to reboot)";
+                        }
+                    } else if (i.sub_ip > 0 && i.gateway == -1) {
+                        text = "Could not set ip and/or subnet. Code " + i.sub_ip.ToString();
+                        if (i.sub_ip == 68 || i.sub_ip == 66 || i.sub_ip == 70) {
+                            text += " (This indicates a bad input parameter!)";
+                        } else if (i.sub_ip == 67) {
+                            text += " (Are you administrator?)";
+                        } else if (i.gateway == 1) {
+                            text += " (You may need to reboot)";
+                        }
+                    } else {
+                        text = "Could not set apply settings. Code " + i.sub_ip.ToString();
+                        if (i.sub_ip == 67 || i.gateway == 67) {
+                            text += " (Are you administrator?)";
+                        }
+                    }
+                }
+
+                status.Text = text;
             } catch (Exception ex)
             {
                 //Do something with exception;
@@ -71,7 +107,7 @@ namespace WindowsFormsApp1
             }
             if (!String.IsNullOrEmpty(GATEWAY_ONE.Text))
             {
-                config.subnet = GATEWAY_ONE.Text;
+                config.gateway = GATEWAY_ONE.Text;
             }
 
             applyConfig(config);
@@ -88,7 +124,7 @@ namespace WindowsFormsApp1
             }
             if (!String.IsNullOrEmpty(GATEWAY_TWO.Text))
             {
-                config.subnet = GATEWAY_TWO.Text;
+                config.gateway = GATEWAY_TWO.Text;
             }
 
             applyConfig(config);
@@ -105,7 +141,7 @@ namespace WindowsFormsApp1
             }
             if (!String.IsNullOrEmpty(GATEWAY_THREE.Text))
             {
-                config.subnet = GATEWAY_THREE.Text;
+                config.gateway = GATEWAY_THREE.Text;
             }
 
             applyConfig(config);
