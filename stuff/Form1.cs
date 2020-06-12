@@ -75,11 +75,13 @@ namespace WindowsFormsApp1
                         } else if (i.gateway == 1) {
                             text += " (You may need to reboot)";
                         }
-                    } else {
-                        text = "Could not set apply settings. Code " + i.sub_ip.ToString();
+                    } else if (i.sub_ip < 0) {
+                        text = "Could not set apply settings. Code 67";
                         if (i.sub_ip == 67 || i.gateway == 67) {
                             text += " (Are you administrator?)";
                         }
+                    } else {
+                        text = "Could not set apply settings. Code " + i.sub_ip.ToString();
                     }
                 }
 

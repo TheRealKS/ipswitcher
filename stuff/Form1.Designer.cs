@@ -368,9 +368,9 @@
             // AdapterList
             // 
             this.AdapterList.FormattingEnabled = true;
-            this.AdapterList.Location = new System.Drawing.Point(376, 11);
+            this.AdapterList.Location = new System.Drawing.Point(375, 15);
             this.AdapterList.Name = "AdapterList";
-            this.AdapterList.Size = new System.Drawing.Size(162, 186);
+            this.AdapterList.Size = new System.Drawing.Size(163, 160);
             this.AdapterList.TabIndex = 13;
             this.AdapterList.SelectedIndexChanged += new System.EventHandler(this.AdapterList_SelectedIndexChanged);
             // 
